@@ -18,7 +18,7 @@ class NewsInformationScreen extends StatefulWidget {
 class _NewsInformationScreen extends State<NewsInformationScreen> {
   late NewsProvider newsProvider;
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -50,35 +50,33 @@ class _NewsInformationScreen extends State<NewsInformationScreen> {
           backgroundColor: ColorsConst.blueColor,
           automaticallyImplyLeading: false,
           title: newsProvider.isSearching
-              ? Container(
-            child: TextFormField(
-              autofocus: true,
-              cursorColor: ColorsConst.whiteColor,
-              cursorHeight: 22,
-              decoration: InputDecoration(
-                isDense: true,
-                hintText: 'Search...',
-                hintStyle:
-                const TextStyle(color: ColorsConst.white54Color),
-                enabledBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(color: ColorsConst.whiteColor),
-                    borderRadius: BorderRadius.circular(8)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide:
-                    const BorderSide(color: ColorsConst.whiteColor),
-                    borderRadius: BorderRadius.circular(8)),
-                contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12, vertical: 6),
-              ),
-              style: const TextStyle(color: Colors.white),
-              onChanged: (query) {
-                setState(() {
-                  newsProvider.searchQuery = query;
-                });
-              },
-            ),
-          )
+              ? TextFormField(
+                autofocus: true,
+                cursorColor: ColorsConst.whiteColor,
+                cursorHeight: 22,
+                decoration: InputDecoration(
+                  isDense: true,
+                  hintText: 'Search Title...',
+                  hintStyle:
+                  const TextStyle(color: ColorsConst.white54Color),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      const BorderSide(color: ColorsConst.whiteColor),
+                      borderRadius: BorderRadius.circular(8)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide:
+                      const BorderSide(color: ColorsConst.whiteColor),
+                      borderRadius: BorderRadius.circular(8)),
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12, vertical: 6),
+                ),
+                style: const TextStyle(color: Colors.white),
+                onChanged: (query) {
+                  setState(() {
+                    newsProvider.searchQuery = query;
+                  });
+                },
+              )
               : Text(
             '${newsProvider.selectedCategory[0].toUpperCase()}${newsProvider.selectedCategory.substring(1)} News',
             style: const TextStyle(color: Colors.white),
