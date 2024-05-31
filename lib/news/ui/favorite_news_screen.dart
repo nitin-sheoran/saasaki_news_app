@@ -27,6 +27,7 @@ class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsConst.whiteColor,
       appBar: AppBar(
         titleSpacing: -6,
         title: const Text('Favorite News',style: TextStyle(color: ColorsConst.whiteColor),),
@@ -51,7 +52,7 @@ class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
           List<Articles> favoriteArticles = provider.getFavoriteArticles();
 
           if (favoriteArticles.isEmpty) {
-            return const Center(child: Text('No favorite articles.'));
+            return const Center(child: Text('No favorite news...'));
           }
 
           return ListView.builder(

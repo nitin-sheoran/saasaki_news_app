@@ -74,6 +74,7 @@ class NewsProvider with ChangeNotifier {
 
 
 
+
   bool isFavorite(String title) {
     return _favoriteArticles.contains(title);
   }
