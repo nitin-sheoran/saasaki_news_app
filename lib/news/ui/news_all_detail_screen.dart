@@ -61,6 +61,14 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
+              Text(
+                widget.newsArticle.title ?? 'Unknown Title',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style:
+                const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
               Center(
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
@@ -87,11 +95,32 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
                         ),
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 20),
+              Text(
+                widget.newsArticle.source?.name ?? 'Unknown Name',
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 6),
               Text(
                 formattedDate,
                 style: const TextStyle(
                     fontSize: 16, color: ColorsConst.blackColor),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                widget.newsArticle.author ?? 'Unknown Author',
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                widget.newsArticle.content ?? 'Unknown Content',
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
               ),
               const SizedBox(height: 10),
               GestureDetector(
@@ -101,36 +130,6 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
                   style: const TextStyle(fontSize: 16, color: Colors.blue),
                 ),
               ),
-              const SizedBox(height: 20),
-              Text(
-                widget.newsArticle.title ?? 'Unknown Title',
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                widget.newsArticle.description ?? 'Unknown Description',
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                widget.newsArticle.content ?? 'Unknown Content',
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                widget.newsArticle.author ?? 'Unknown Author',
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-
             ],
           ),
         ),

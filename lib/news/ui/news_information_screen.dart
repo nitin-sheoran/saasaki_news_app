@@ -18,12 +18,21 @@ class NewsInformationScreen extends StatefulWidget {
 class _NewsInformationScreen extends State<NewsInformationScreen> {
   late NewsProvider newsProvider;
 
+  ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     newsProvider = Provider.of<NewsProvider>(context, listen: false);
     newsProvider.fetchNews();
     newsProvider.initSharedPreferences();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        newsProvider.fetchMoreNews();
+      }
+    });
   }
 
   @override
@@ -153,7 +162,8 @@ class _NewsInformationScreen extends State<NewsInformationScreen> {
               }
               articles.sort((a, b) => b.publishedAt!.compareTo(a.publishedAt!));
               return ListView.builder(
-                itemCount: articles.length + (provider.isLoadingMore ? 1 : 0),
+                controller: _scrollController,
+                itemCount: articles.length + 1,
                 itemBuilder: (context, index) {
                   if (index == articles.length) {
                     return const Padding(
@@ -282,4 +292,128 @@ class _NewsInformationScreen extends State<NewsInformationScreen> {
 }
 
 
-
+// class _NewsInformationScreen extends State<NewsInformationScreen> {
+//   late NewsProvider newsProvider;
+//   ScrollController _scrollController = ScrollController();
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     newsProvider = Provider.of<NewsProvider>(context, listen: false);
+//     newsProvider.fetchNews();
+//     newsProvider.initSharedPreferences();
+//
+//     _scrollController.addListener(() {
+//       if (_scrollController.position.pixels ==
+//           _scrollController.position.maxScrollExtent) {
+//         newsProvider.loadMoreNews();
+//       }
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: double.infinity,
+//       width: double.infinity,
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(6),
+//         color: ColorsConst.whiteColor,
+//       ),
+//       child: Scaffold(
+//         backgroundColor: ColorsConst.whiteColor,
+//         body: Consumer<NewsProvider>(
+//           builder: (context, provider, child) {
+//             if (provider.isLoading && provider.articles.isEmpty) {
+//               return const Center(child: CircularProgressIndicator());
+//             } else {
+//               List<Articles> articles = provider.articles;
+//               if (newsProvider.searchQuery.isNotEmpty) {
+//                 articles = articles.where((article) {
+//                   return article.title!
+//                       .toLowerCase()
+//                       .contains(newsProvider.searchQuery.toLowerCase());
+//                 }).toList();
+//               }
+//               articles.sort((a, b) => b.publishedAt!.compareTo(a.publishedAt!));
+//               return ListView.builder(
+//                 controller: _scrollController,
+//                 itemCount: articles.length + 1,
+//                 itemBuilder: (context, index) {
+//                   if (index == articles.length) {
+//                     return const Padding(
+//                       padding: EdgeInsets.only(bottom: 20),
+//                       child: Center(child: CircularProgressIndicator()),
+//                     );
+//                   }
+//                   DateTime lastUpdatedDate =
+//                   DateTime.parse(articles[index].publishedAt.toString());
+//                   String formattedDate =
+//                   DateFormat('dd MMM yyyy hh:mm a').format(lastUpdatedDate);
+//                   return Padding(
+//                     padding: const EdgeInsets.only(left: 14, right: 14),
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         GestureDetector(
+//                           onTap: () {
+//                             Navigator.push(
+//                               context,
+//                               MaterialPageRoute(
+//                                 builder: (context) => NewsAllDetailScreen(
+//                                   newsArticle: articles[index],
+//                                 ),
+//                               ),
+//                             );
+//                           },
+//                           child: ListTile(
+//                             contentPadding: EdgeInsets.zero,
+//                             leading: SizedBox(
+//                               height: 80,
+//                               width: 100,
+//                               child: ClipRRect(
+//                                 borderRadius: BorderRadius.circular(10),
+//                                 child: articles[index].urlToImage != null
+//                                     ? Image.network(
+//                                   articles[index].urlToImage!,
+//                                   fit: BoxFit.cover,
+//                                 )
+//                                     : Container(
+//                                   color: ColorsConst.whiteColor,
+//                                   child: Center(
+//                                     child: Image.network(
+//                                       StringConst.comingSoonImage,
+//                                     ),
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+//                             title: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text(
+//                                   articles[index].title ?? '',
+//                                   style: const TextStyle(
+//                                     fontWeight: FontWeight.bold,
+//                                     fontSize: 14,
+//                                   ),
+//                                   maxLines: 1,
+//                                   overflow: TextOverflow.ellipsis,
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                         const Divider(),
+//                       ],
+//                     ),
+//                   );
+//                 },
+//               );
+//             }
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
