@@ -7,7 +7,7 @@ class NewsApiService {
 
   Future<List<Articles>> fetchNews(String category, int page) async {
     final response = await http.get(
-      Uri.parse('https://newsapi.org/v2/top-headlines?category=$category&page=$page&apiKey=$apiKey'),
+      Uri.parse('https://newsapi.org/v2/everything?q=$category&page=$page&apiKey=$apiKey'),
     );
 
     if (response.statusCode == 200) {

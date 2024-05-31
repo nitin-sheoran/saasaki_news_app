@@ -130,6 +130,7 @@ class _NewsAllDetailScreenState extends State<NewsAllDetailScreen> {
                   fontSize: 16,
                 ),
               ),
+
             ],
           ),
         ),
